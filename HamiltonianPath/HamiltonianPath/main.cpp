@@ -1,3 +1,6 @@
+
+// Done by Marc Latorre && Ferran Martín //
+
 #include <iostream>
 
 using namespace std;
@@ -21,7 +24,7 @@ bool CanBeAddedToPath(int v, bool graph[GRAHP_SIZE][GRAHP_SIZE], int path[], int
 
 bool CheckHamiltonian(bool graph[GRAHP_SIZE][GRAHP_SIZE], int path[], int pos, bool& isCycle)
 {
-	if (pos == GRAHP_SIZE)
+	if (pos == GRAHP_SIZE) // Path completed
 	{
 		if (graph[path[pos - 1]][path[0]] == 1)
 		{
@@ -39,6 +42,8 @@ bool CheckHamiltonian(bool graph[GRAHP_SIZE][GRAHP_SIZE], int path[], int pos, b
 	{
 		if (CanBeAddedToPath(i, graph, path, pos))
 		{
+			// If it can be added the vertex is added to the path, 
+			// if not the path position goes back to be -1 to check new paths if they exist
 			path[pos] = i;
 			if (CheckHamiltonian(graph, path, pos + 1, isCycle) == true)
 				return true;
