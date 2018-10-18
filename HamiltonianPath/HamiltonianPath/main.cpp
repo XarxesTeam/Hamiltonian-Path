@@ -5,7 +5,7 @@
 
 using namespace std;
 
-#define GRAHP_SIZE 5
+#define GRAHP_SIZE 7
 
 void PrintPath(int path[], bool isCycle);
 
@@ -60,8 +60,20 @@ bool DoHamiltonian(bool graph[GRAHP_SIZE][GRAHP_SIZE])
 
 	for (int i = 0; i < GRAHP_SIZE; i++)
 		path[i] = -1;
-	path[0] = 0;
 
+	path[0] = 0;
+	for (int i = 0; i < GRAHP_SIZE; i++)
+	{
+		int numConnections = 0;
+		for (int j = 0; j < GRAHP_SIZE; j++)
+		{
+			if (graph[i][j] == true)
+				numConnections++;
+		}
+		if (numConnections == 1)
+			path[0] = i;
+	}
+	
 	if (CheckHamiltonian(graph, path, 1, isCycle) == false)
 	{
 		cout << "\nSolution does not exist" << endl;
@@ -91,18 +103,20 @@ void PrintPath(int path[], bool isCycle)
 int main()
 {
 	/*
-	(0)-------(2)
-	|          |
-	|   -(1)-  |
-	|  /     \ |
-	(3)       (4)    
+	(0)-------(2) --(5)
+	|          |	 |
+	|   -(1)   |	 |
+	|  /       |	 |
+	(3)       (4)   (6)
 	*/
 	bool graph1[GRAHP_SIZE][GRAHP_SIZE] =
-	{	{ 0, 0, 1, 1, 0 },
-		{ 0, 0, 0, 1, 1 },
-		{ 1, 0, 0, 0, 1 },
-		{ 1, 1, 0, 0, 0 },
-		{ 0, 1, 1, 0, 0 },
+	{	{ 0, 0, 1, 1, 0, 0, 0},
+		{ 0, 0, 0, 1, 0, 0, 0},
+		{ 1, 0, 0, 0, 1, 1, 0},
+		{ 1, 1, 0, 0, 0, 0, 0},
+		{ 0, 0, 1, 0, 0, 0, 0},
+		{ 0, 0, 1, 0, 0, 0, 1},
+		{ 0, 0, 0, 0, 0, 1, 0},
 	};
 
 	DoHamiltonian(graph1);
